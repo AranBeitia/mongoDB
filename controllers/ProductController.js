@@ -30,29 +30,22 @@ const ProductController = {
 			res.status(500).send({ message: 'Error al recuperar producto por id' })
 		}
 	},
-	// async getProductsByName(req, res) {
-	// 	try {
-	// 		const products = await Product.find({
-	// 			$text: {
-	// 				$search: req.params.name,
-	// 			},
-	// 		})
-	// 		res.send(products)
-	// 		// const name = new RegExp(req.params.name, 'i')
-	// 		// const products = await Product.find({ name })
-	// 		// res.send(products)
-	// 	} catch (error) {
-	// 		console.log(error)
-	// 	}
-	// },
+
 	async getProductsByName(req, res) {
 		try {
-			const name = new RegExp(req.params.name, 'i')
+			// if (req.params.name.length > 20) {
+			// 	return res.status(400).send('Búsqueda demasiado larga')
+			// }
+
+			// const name = new RegExp(req.params.name, 'i')
+			// const products = await Product.find({ name })
+
 			const products = await Product.find({
 				$text: {
 					$search: req.params.name,
 				},
 			})
+
 			res.send(products)
 		} catch (error) {
 			console.log(error)
