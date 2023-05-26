@@ -9,5 +9,6 @@ router.get('/:_id', ProductController.getById)
 router.get('/name/:name', ProductController.getProductsByName)
 router.delete('/id/:_id', authentication, isAdmin, ProductController.delete)
 router.put('/id/:_id', authentication, isAdmin, ProductController.update)
+router.put('/reviews/:_id', authentication, ProductController.insertComment)
 
 module.exports = router
