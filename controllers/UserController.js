@@ -3,13 +3,15 @@ const jwt = require('jsonwebtoken')
 const { jwt_secret } = require('../config/key.js')
 
 const UserController = {
-	async register(req, res) {
+	async register(req, res, next) {
 		try {
 			const user = await User.create({ ...req.body, role: 'user' })
 			res.status(201).send({ message: 'Usuario registrado con exito', user })
 		} catch (error) {
-			res.status(400).send({ message: 'Error al crear usuario', error })
-			console.error(error)
+			error.origin = 'usuario'
+			next(error)
+			// res.status(400).send({ message: 'Error al crear usuario', error })
+			// console.error(error)
 		}
 	},
 	async login(req, res) {
@@ -42,12 +44,14 @@ const UserController = {
 	},
 	async getInfo(req, res) {
 		try {
-			const user = await User.findById(req.user._id).populate({
-				path: 'orderIds',
-				populate: {
-					path: 'productIds',
-				},
-			})
+			const user = await User.findById(req.user._id)
+				.populate({
+					path: 'orderIds',
+					populate: {
+						path: 'productIds',
+					},
+				})
+				.populate('wishList')
 
 			res.send(user)
 		} catch (error) {

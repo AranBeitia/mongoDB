@@ -8,9 +8,13 @@ const ProductSchema = new mongoose.Schema(
 		reviews: [
 			{
 				userId: { type: ObjectId, ref: 'User' },
-				comment: String,
+				comment: {
+					type: String,
+					required: [true, 'Por favor escribe algo'],
+				},
 			},
 		],
+		likes: [{ type: ObjectId }],
 	},
 	{ timestamps: true }
 )
