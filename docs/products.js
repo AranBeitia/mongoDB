@@ -1,9 +1,40 @@
 module.exports = {
 	paths: {
+		'/products/{_id}': {
+			get: {
+				tags: {
+					Products: 'Get a product by id',
+				},
+				description: 'Get products',
+				operationId: 'getProducts',
+				parameters: [
+					{
+						name: '_id',
+						in: 'path',
+						schema: {
+							$ref: '#/components/schemas/_id',
+						},
+						description: 'Id of Product to be updated',
+					},
+				],
+				responses: {
+					200: {
+						description: 'Products were obtained',
+						content: {
+							'application/json': {
+								schema: {
+									$ref: '#/components/schemas/productGet',
+								},
+							},
+						},
+					},
+				},
+			},
+		},
 		'/products/getAll': {
 			get: {
 				tags: {
-					Products: 'Get Products',
+					Products: 'Get all products',
 				},
 				description: 'Get products',
 				operationId: 'getProducts',
@@ -14,7 +45,7 @@ module.exports = {
 						content: {
 							'application/json': {
 								schema: {
-									$ref: '#/components/schemas/product',
+									$ref: '#/components/schemas/productGetAll',
 								},
 							},
 						},
