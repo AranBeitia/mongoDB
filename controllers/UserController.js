@@ -26,6 +26,9 @@ const UserController = {
 			res.send({ message: 'Bienvenid@ ' + user.name, token, user })
 		} catch (error) {
 			console.error(error)
+			res.send({
+				message: 'Hubo un problema al logarse',
+			})
 		}
 	},
 
